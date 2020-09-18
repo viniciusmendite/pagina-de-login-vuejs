@@ -19,10 +19,16 @@
             .link, .link:hover {
                 color: #f37520
             }
+            .fade-login-enter, .fade-login-leave-to {
+              opacity: 0;
+            }
+            .fade-login-enter-active, .fade-login-leave-active {
+              transition: opacity .3s ease-in-out;
+            }
         </style>
     </head>
     <body class="hold-transition login-page">
-        <div class="login-box">
+        <div class="login-box" id="hcode-login">
             <div class="login-logo">
                 <a href="#">
                     <b>Hcode Treinamentos</b>
@@ -32,8 +38,8 @@
 
             <div class="row links">
                 <div class="col-12">
-                    <a href="#" class="link">Login</a>
-                    <a href="#" class="link" style="position: absolute; right: 0">Se cadastrar</a>
+                    <a href="#" class="link" @click.prevent="changeAction('login')">Login</a>
+                    <a href="#" class="link" @click.prevent="changeAction('register')" style="position: absolute; right: 0">Se cadastrar</a>
                 </div>
             </div>
 
@@ -41,6 +47,8 @@
             
             <div class="card">
                 <div class="card-body login-card-body">
+                <transition name="fade-login" mode="out-in">
+                  <div class="login" v-if="action === 'login'" key="login">
                     <p class="login-box-msg">Fazer Login</p>
 
                     <form method="post">
@@ -76,9 +84,9 @@
                         
                         </div>
                     </form>
+                  </div>
 
-                    <hr>
-
+                  <div class="register" v-else key="register">  
                     <p class="login-box-msg">Se cadastrar</p>
 
                     <form action="#" method="post">
@@ -130,6 +138,8 @@
                           
                         </div>
                     </form>
+                  </div>
+                </transition>
                 
                 </div>
             </div>
@@ -138,6 +148,22 @@
         <script src="./assets/plugins/jquery/jquery.min.js"></script>
         <script src="./assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="./assets/dist/js/adminlte.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <script>
+          let app = new Vue({
+            el: '#hcode-login',
+            data: {
+              action: 'login',
+            },
+            methods: {
+              changeAction(action) {
+                this.action = action;
+              }
+            }
+          })
+
+        </script>
 
     </body>
 </html>
