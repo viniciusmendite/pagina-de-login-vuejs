@@ -47,6 +47,9 @@
             
             <div class="card">
                 <div class="card-body login-card-body">
+
+                  <div role="alert" :class="['alert', isFormSend ? 'alert-success' : 'alert-danger']" v-if="isFormSend">Formulário enviado com sucesso :)</div>
+
                 <transition name="fade-login" mode="out-in">
                   <div class="login" v-if="action === 'login'" key="login">
                     <p class="login-box-msg">Fazer Login</p>
@@ -79,7 +82,7 @@
                         </div>
                         
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            <button type="submit" class="btn btn-primary btn-block" @click.prevent="sendForm">Login</button>
                         </div>
                         
                         </div>
@@ -133,7 +136,7 @@
                           </div>
                           
                           <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+                            <button type="submit" class="btn btn-primary btn-block" @click.prevent="sendForm">Cadastrar</button>
                           </div>
                           
                         </div>
@@ -155,10 +158,14 @@
             el: '#hcode-login',
             data: {
               action: 'login',
+              isFormSend: false,
             },
             methods: {
               changeAction(action) {
                 this.action = action;
+              },
+              sendForm() {
+                this.isFormSend = true;
               }
             }
           })
